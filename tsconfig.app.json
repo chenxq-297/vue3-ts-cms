@@ -1,0 +1,24 @@
+// app
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "src/**/**/**/*.ts",
+    "src/auto-imports.d.ts",
+    "src/components.d.ts"
+  ],
+  "exclude": ["src/**/__tests__/*"],
+  // 给vscode提示
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    // typescript5.0引入了新的 moduleResolution：bundler
+    // element-plus应该未对此支持
+    "moduleResolution": "node"
+  }
+}
