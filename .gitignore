@@ -14,7 +14,7 @@ dist-ssr
 coverage
 *.local
 
-src\service\request\config.ts
+src/service/request/config.ts
 
 /cypress/videos/
 /cypress/screenshots/
