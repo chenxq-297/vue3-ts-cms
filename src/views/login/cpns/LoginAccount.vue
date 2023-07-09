@@ -12,7 +12,6 @@ import type { IAccount } from '@/views/login/types/LoginAccountType'
 import { useRouter } from 'vue-router'
 const route = useRouter()
 
-
 const LoginStore = useLoginStore()
 
 const formRef = ref<FormInstance>()

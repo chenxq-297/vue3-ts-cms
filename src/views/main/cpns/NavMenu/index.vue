@@ -18,8 +18,7 @@ const userMenus = loginStore.userMenus
       <span class="title" v-if="!collapse">vue3+297</span>
     </div>
     <!-- 菜单 -->
-    <el-menu class="el-menu-vertical" :collapse="collapse" background-color="#0c2135" text-color="#b7bdc3"
-      active-text-color="#0a60bd">
+    <el-menu class="el-menu-vertical" :collapse="collapse" background-color="#0c2135" text-color="#b7bdc3" active-text-color="#0a60bd">
       <template v-for="item in userMenus" :key="item.id">
         <!-- 一级菜单 -->
         <template v-if="item.type === 1">

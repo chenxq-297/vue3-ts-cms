@@ -51,17 +51,14 @@ const breadcrumbs = computed(() => {
       <!-- 面包屑 -->
       <el-breadcrumb separator="/">
         <template v-for="(item, index) in breadcrumbs" :key="index">
-          <el-breadcrumb-item :to="item.path">{{
-            item.name
-          }}</el-breadcrumb-item>
+          <el-breadcrumb-item :to="item.path">{{ item.name }}</el-breadcrumb-item>
         </template>
       </el-breadcrumb>
     </div>
     <div class="right">
       <el-dropdown>
         <span class="el-dropdown-link">
-          <el-avatar class="right-img" size="small"
-            src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+          <el-avatar class="right-img" size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
           297
         </span>
         <template #dropdown>
