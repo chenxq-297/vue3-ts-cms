@@ -20,8 +20,6 @@ const cmsRequst = new Request({
       return err
     },
     responseInterceptor(config) {
-      console.log(config.data, 'config')
-
       return config.data
     },
     responseInterceptorCatch(config) {
