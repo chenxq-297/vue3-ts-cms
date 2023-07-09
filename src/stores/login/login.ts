@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
+
+import { accountLoginRequest, getRoleMenusRequset, getUserByIdRequset } from '@/service/login/login'
+import { mapMenuToRoutes } from '@/utils/map-menu'
 import LocalCache from '@/utils/cache'
+import router from '@/router'
 
 import type { IAccount } from '@/views/login/types/LoginAccountType'
-import { accountLoginRequest, getRoleMenusRequset, getUserByIdRequset } from '@/service/login/login'
 import type { IRoleMenus, IUserById } from '@/service/login/types'
-import router from '@/router'
 
 interface stateType {
   tokens: string
@@ -46,8 +48,14 @@ const useLoginStore = defineStore('login', {
       this.userMenus = menu.data
       LocalCache.setCache('RB-cms-userMenus', this.userMenus)
 
+      // 动态添加路由
+      const routes = mapMenuToRoutes(this.userMenus)
+      for (const route of routes) {
+        router.addRoute('main', route)
+      }
+
       // main
-      console.log(router.push('/main'))
+      router.push('/main')
     }
   }
 })

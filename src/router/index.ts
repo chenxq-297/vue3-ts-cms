@@ -16,7 +16,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, form) => {
+router.beforeEach((to) => {
   if (to.path === '/main') {
     const token = LocalCache.getCache('RB-cms-Token')
 
@@ -24,8 +24,6 @@ router.beforeEach((to, form) => {
       return '/login'
     }
   }
-
-  // return to
 })
 
 export default router

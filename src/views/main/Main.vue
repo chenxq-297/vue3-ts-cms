@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 import NavHeader from './cpns/NavHeader/index.vue'
+import NavMenu from './cpns/NavMenu/index.vue'
 
 const collapse = ref<boolean>(false)
 const collapseControl = (value: boolean) => {
@@ -12,7 +13,7 @@ const collapseControl = (value: boolean) => {
 <template>
   <el-container class="main-content">
     <el-aside :width="collapse ? '60px' : '210px'">
-      <!-- <NavMenu :collapse="Collapse" /> -->
+      <NavMenu :collapse="collapse" />
     </el-aside>
     <el-container class="page">
       <el-header class="page-header">
