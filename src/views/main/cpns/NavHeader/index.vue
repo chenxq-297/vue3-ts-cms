@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import router from '@/router'
+
+import { mapPathToBreadcrumbs } from '@/utils/map-menu'
 import LocalCache from '@/utils/cache'
-import { ref } from 'vue'
+
+import useLoginStore from '@/stores/login/login'
+
+const route = useRoute()
+const loginStore = useLoginStore()
 
 const props = defineProps({
   collapse: {
@@ -22,7 +30,15 @@ const editLogin = () => {
   router.push('/login')
 }
 
-const breadcrumbs = ref([])
+// breadcrumbs 数据整合
+
+const breadcrumbs = computed(() => {
+  console.log(loginStore.userMenus, route.path)
+
+  console.log(mapPathToBreadcrumbs(loginStore.userMenus, route.path))
+
+  return mapPathToBreadcrumbs(loginStore.userMenus, route.path)
+})
 </script>
 
 <template>
@@ -35,7 +51,9 @@ const breadcrumbs = ref([])
       <!-- 面包屑 -->
       <el-breadcrumb separator="/">
         <template v-for="(item, index) in breadcrumbs" :key="index">
-          <!-- <el-breadcrumb-item :to="item.path">{{ item.name }}</el-breadcrumb-item> -->
+          <el-breadcrumb-item :to="item.path">{{
+            item.name
+          }}</el-breadcrumb-item>
         </template>
       </el-breadcrumb>
     </div>

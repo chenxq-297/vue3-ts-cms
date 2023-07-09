@@ -19,10 +19,7 @@ const collapseControl = (value: boolean) => {
         <NavHeader :collapse="collapse" @collapseControl="collapseControl" />
       </el-header>
       <el-main class="page-content">
-        123
-        <!-- <div class="page-info">
-            <router-view></router-view>
-          </div> -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -38,11 +35,8 @@ const collapseControl = (value: boolean) => {
 
   .page-content {
     height: calc(100% - 48px);
-
-    .page-info {
-      background-color: #fff;
-      border-radius: 5px;
-    }
+    background-color: #fff;
+    border-radius: 5px;
   }
 
   .el-header,
