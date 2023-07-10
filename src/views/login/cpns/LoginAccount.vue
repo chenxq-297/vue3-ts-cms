@@ -9,8 +9,6 @@ import useLoginStore from '@/stores/login/login'
 
 import type { FormInstance } from 'element-plus'
 import type { IAccount } from '@/views/login/types/LoginAccountType'
-import { useRouter } from 'vue-router'
-const route = useRouter()
 
 const LoginStore = useLoginStore()
 
@@ -33,7 +31,6 @@ const loginAction = (isSaveLocal: boolean) => {
         LocalCache.delecteCache('RB-cms-remember')
       }
       LoginStore.accountLoginAction(account)
-      console.log(route.options, 'route')
     } else {
       ElMessage('账号或密码有误')
     }

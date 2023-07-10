@@ -20,8 +20,6 @@ const props = defineProps({
 const emits = defineEmits(['collapseControl'])
 const collapseIconClk = () => {
   const flag = !props.collapse
-  console.log(flag)
-
   emits('collapseControl', flag)
 }
 
@@ -31,12 +29,7 @@ const editLogin = () => {
 }
 
 // breadcrumbs 数据整合
-
 const breadcrumbs = computed(() => {
-  // console.log(loginStore.userMenus, route.path)
-
-  // console.log(mapPathToBreadcrumbs(loginStore.userMenus, route.path))
-
   return mapPathToBreadcrumbs(loginStore.userMenus, route.path)
 })
 </script>
@@ -50,7 +43,7 @@ const breadcrumbs = computed(() => {
       </el-icon>
       <!-- 面包屑 -->
       <el-breadcrumb separator="/">
-        <template v-for="(item, index) in breadcrumbs" :key="index">
+        <template v-for="item in breadcrumbs" :key="item">
           <el-breadcrumb-item :to="item.path">{{ item.name }}</el-breadcrumb-item>
         </template>
       </el-breadcrumb>
@@ -85,7 +78,10 @@ const breadcrumbs = computed(() => {
 
   .left {
     display: flex;
-    margin-right: 9px;
+
+    .el-icon {
+      margin-right: 9px;
+    }
   }
 
   .fold-menu {

@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/login/login'
+import { mapPathToMenu } from '@/utils/map-menu'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 const loginStore = useLoginStore()
+const route = useRoute()
 defineProps({
   collapse: {
     type: Boolean
   }
 })
 const userMenus = loginStore.userMenus
+const defaultValue = computed(() => mapPathToMenu(userMenus, route.path)?.id + '')
 </script>
 
 <template>
@@ -18,7 +23,7 @@ const userMenus = loginStore.userMenus
       <span class="title" v-if="!collapse">vue3+297</span>
     </div>
     <!-- 菜单 -->
-    <el-menu class="el-menu-vertical" :collapse="collapse" background-color="#0c2135" text-color="#b7bdc3" active-text-color="#0a60bd">
+    <el-menu class="el-menu-vertical" :default-active="defaultValue" :collapse="collapse" background-color="#0c2135" text-color="#b7bdc3" active-text-color="#0a60bd">
       <template v-for="item in userMenus" :key="item.id">
         <!-- 一级菜单 -->
         <template v-if="item.type === 1">

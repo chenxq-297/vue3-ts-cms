@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { accountLoginRequest, getRoleMenusRequset, getUserByIdRequset } from '@/service/login/login'
-import { mapMenuToRoutes } from '@/utils/map-menu'
+import { mapMenuToRoutes, firstRoute } from '@/utils/map-menu'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
 
@@ -32,6 +32,7 @@ const useLoginStore = defineStore('login', {
   },
   getters: {},
   actions: {
+    // 登录
     async accountLoginAction(payload: IAccount) {
       const login = await accountLoginRequest(payload)
       const { id, token } = login.data
@@ -54,8 +55,20 @@ const useLoginStore = defineStore('login', {
         router.addRoute('main', route)
       }
 
-      // main
-      router.push('/main')
+      // 跳转第一条路由
+      firstRoute ? router.push(firstRoute) : router.push('/main')
+    },
+
+    // 持久化
+    loadLocalDataActions() {
+      this.tokens = LocalCache.getCache('RB-cms-Token')
+      this.userInfo = LocalCache.getCache('RB-cms-userInfo')
+      this.userMenus = LocalCache.getCache('RB-cms-userMenus')
+
+      const routes = mapMenuToRoutes(this.userMenus)
+      for (const route of routes) {
+        router.addRoute('main', route)
+      }
     }
   }
 })

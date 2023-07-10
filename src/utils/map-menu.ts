@@ -1,6 +1,12 @@
 import type { IRoleMenus } from '@/service/login/types'
 import type { RouteRecordRaw } from 'vue-router'
 
+interface IBreadcrumbs {
+  name: string
+  path: string
+}
+
+export let firstRoute: RouteRecordRaw | undefined = undefined
 // 所有路由表
 export function loadAllRoutes() {
   const routes: RouteRecordRaw[] = []
@@ -22,12 +28,15 @@ export function mapMenuToRoutes(menus: IRoleMenus[]) {
         const route = allRoutes.find((item) => {
           return item.path === menu.url
         })
-
+        // 添加匹配到的路由
         if (route) findRoutes.push(route)
+        // 第一次登录
+        if (route && !firstRoute) firstRoute = route
       } else {
-        // if (menu.type === 1 && menu.children?.length) {
-        //   findRoutes.push({ path: menu.url, redirect: menu.children[0].url })
-        // }
+        // 重定向路由（面包屑）
+        if (menu.type === 1 && menu.children?.length) {
+          findRoutes.push({ path: menu.url, redirect: menu.children[0].url })
+        }
         _recurserGetRoute(menu.children ?? [])
       }
     }
@@ -38,9 +47,10 @@ export function mapMenuToRoutes(menus: IRoleMenus[]) {
 }
 
 // 当前路由映射到面包屑
-export function mapPathToBreadcrumbs(menus: any, path: any) {
-  const breadcrumbs = []
+export function mapPathToBreadcrumbs(menus: IRoleMenus[], path: string) {
+  const breadcrumbs: IBreadcrumbs[] = []
   for (const menu of menus) {
+    if (menu.children === undefined) return
     for (const submenu of menu.children) {
       if (submenu.url === path) {
         breadcrumbs.push({ name: menu.name, path: menu.url })
@@ -49,4 +59,14 @@ export function mapPathToBreadcrumbs(menus: any, path: any) {
     }
   }
   return breadcrumbs
+}
+
+// 根据当前路由匹配菜单
+export function mapPathToMenu(menus: IRoleMenus[], path: string) {
+  for (const menu of menus) {
+    if (menu.children === undefined) return
+    for (const submenu of menu.children) {
+      if (path === submenu.url) return submenu
+    }
+  }
 }
