@@ -1,7 +1,7 @@
-import cmsRequst from '../index'
+import cmsRequst, { type IdataType } from '../index'
 
 import type { IAccount } from '@/views/login/types/LoginAccountType'
-import type { IAccountResult, IRoleMenus, IUserById, IdataType } from './types'
+import type { IAccountResult, IRoleMenus, IUserById } from './types'
 
 export function accountLoginRequest(account: IAccount) {
   return cmsRequst.post<IdataType<IAccountResult>>({

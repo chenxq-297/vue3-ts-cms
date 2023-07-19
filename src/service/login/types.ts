@@ -1,8 +1,3 @@
-export interface IdataType<T = any> {
-  code: number
-  data: T
-}
-
 export interface IAccountResult {
   id: number
   name: string

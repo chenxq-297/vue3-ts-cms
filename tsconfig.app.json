@@ -1,7 +1,7 @@
 // app
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/**/**/*.ts", "src/auto-imports.d.ts", "src/components.d.ts"],
+  "include": ["env.d.ts", "src/**/*", "src/auto-imports.d.ts", "src/components.d.ts"],
   "exclude": ["src/**/__tests__/*"],
   // 给vscode提示
   "compilerOptions": {

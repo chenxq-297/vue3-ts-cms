@@ -1,12 +1,17 @@
-<template>
-  <div class="department">
-    <h2>department</h2>
-  </div>
-</template>
+<script setup lang="ts">
+import PageForm from '@/components/pageForm/index.vue'
 
-<script setup lang="ts" name="department"></script>
+import searchConfig from './config/search.config'
 
-<style scoped>
-.department {
+const queryBtnClick = (form) => {
+  // 查询网络请求
+  console.log(form)
 }
-</style>
+const resetBtnClick = () => {
+  // 重置网络请求
+}
+</script>
+
+<template>
+  <PageForm :searchConfig="searchConfig" @queryClick="(form) => queryBtnClick(form)" @resetClick="resetBtnClick" />
+</template>

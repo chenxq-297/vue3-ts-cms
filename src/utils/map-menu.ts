@@ -70,3 +70,18 @@ export function mapPathToMenu(menus: IRoleMenus[], path: string) {
     }
   }
 }
+
+export function mapMenuToPersssions(menus: any[]) {
+  const permissions: string[] = []
+  function _recurseGetPermission(menuList: any[]) {
+    for (const menu of menuList) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  _recurseGetPermission(menus)
+  return permissions
+}

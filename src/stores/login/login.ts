@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { accountLoginRequest, getRoleMenusRequset, getUserByIdRequset } from '@/service/login/login'
-import { mapMenuToRoutes, firstRoute } from '@/utils/map-menu'
+import { mapMenuToRoutes, firstRoute, mapMenuToPersssions } from '@/utils/map-menu'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
 
@@ -12,24 +12,33 @@ interface stateType {
   tokens: string
   userInfo: IUserById
   userMenus: IRoleMenus[]
+  permissions: string[]
 }
 
 const useLoginStore = defineStore('login', {
-  state(): stateType {
-    return {
-      tokens: '',
-      userInfo: {
+  state: (): stateType => ({
+    tokens: '',
+    userInfo: {
+      id: 0,
+      role: {
         id: 0,
-        role: {
-          id: 0
-        },
-        department: {
-          id: 0
-        }
+        name: undefined,
+        intro: undefined,
+        createAt: undefined,
+        updateAt: undefined
       },
-      userMenus: []
-    }
-  },
+      department: {
+        id: 0,
+        name: undefined,
+        parentId: undefined,
+        createAt: undefined,
+        updateAt: undefined,
+        leader: undefined
+      }
+    },
+    userMenus: [],
+    permissions: []
+  }),
   getters: {},
   actions: {
     // 登录
@@ -48,6 +57,10 @@ const useLoginStore = defineStore('login', {
       const menu = await getRoleMenusRequset(this.userInfo.role.id)
       this.userMenus = menu.data
       LocalCache.setCache('RB-cms-userMenus', this.userMenus)
+
+      const permissions = mapMenuToPersssions(this.userMenus)
+      this.permissions = permissions
+      LocalCache.setCache('RB-cms-permissions', this.permissions)
 
       // 动态添加路由
       const routes = mapMenuToRoutes(this.userMenus)

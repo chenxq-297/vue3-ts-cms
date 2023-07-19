@@ -2,6 +2,11 @@ import Request from './request'
 import { BASE_URL, TIMEOUT } from './request/config'
 import LocalCache from '@/utils/cache'
 
+export interface IdataType<T = any> {
+  code: number
+  data: T
+}
+
 // 需要登录的请求实例
 const cmsRequst = new Request({
   baseURL: BASE_URL,
