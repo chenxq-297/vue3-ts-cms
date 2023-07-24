@@ -1,3 +1,4 @@
+import type { pageName } from '@/service/main/type'
 import type { ElForm } from 'element-plus'
 
 export type searchConfig = {
@@ -14,7 +15,7 @@ export type searchFormType = Record<string, any>
 export type formType = InstanceType<typeof ElForm>
 
 export interface IFormProps {
-  pageName: string
+  pageName: keyof pageName
   formItems: IFormPropsItem[]
 }
 

@@ -1,7 +1,7 @@
 import type { IFormProps } from '@/components/pageForm/type'
 
 const searchConfig: IFormProps = {
-  pageName: 'role',
+  pageName: 'users',
   formItems: [
     {
       label: '用户名',

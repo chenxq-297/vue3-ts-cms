@@ -5,13 +5,13 @@ import LocalCache from '@/utils/cache'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', redirect: '/main' },
+    { path: '/', redirect: '/login' },
     { path: '/login', name: 'login', component: () => import('@/views/login/Login.vue') },
     { path: '/main', name: 'main', component: () => import('@/views/main/Main.vue') },
     {
       path: '/:pathMatch(.*)*',
       name: '/notfound',
-      component: () => import('@/views/notFound/NotFound.vue')
+      component: () => import('@/views/notFound/notFound.vue')
     }
   ]
 })

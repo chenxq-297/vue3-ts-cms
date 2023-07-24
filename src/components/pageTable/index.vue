@@ -1,88 +1,62 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
-// import useSystemStore from '@/stores/main/system/system.ts'
-// import usePermission from '@/hooks/usePermission.ts'
 
-interface IProps {
-  tableConfig: {
-    propsList: any[]
-    childrenProps?: any
-  }
-  otherConfig: {
-    header?: {
-      title: string
-      btnTitle?: string
-    }
-    pageName: string
-    showfooter: boolean
-  }
+import type { tableConfig, emitsTableConfig } from './type'
+
+const props = withDefaults(defineProps<tableConfig>(), {})
+const emits = defineEmits<emitsTableConfig>()
+
+// 拿到props的页码、监听、以及发生变化导出
+const offset = ref(props.paginConfig?.offset || 1)
+const size = ref(props.paginConfig?.size || 1)
+
+// watch([offset, size], () => {
+//   const paginConfig = {
+//     size: size.value,
+//     offset: offset.value
+//   }
+//   emits('@update:paginConfig', { ...props?.paginConfig, ...paginConfig })
+//   // console.log(123123123123123)
+//   // console.log(props)
+// })
+
+const changePagina = (current: string, currentNum: number) => {
+  // 赋值本组件
+  current === 'page-size' ? (size.value = currentNum) : (offset.value = currentNum)
+  // 发射父组件
+  emits('paginConfigFn', { current, currentNum })
 }
-const props = defineProps<IProps>()
-const emit = defineEmits(['newDataClick', 'editDataClick'])
 </script>
 
 <template>
-  <div v-if="otherConfig.header" class="header">
-    <h3 class="title">{{ otherConfig.header.title }}</h3>
-    <!-- <el-button v-if="isCreate" type="primary" @click="handleNewData">
-        {{ contentConfig.header?.btnTitle }}
-      </el-button> -->
-  </div>
-  <div class="table">
-    <el-table :data="pageList" :border="true" style="width: 100%" v-bind="contentConfig.childrenProps">
-      <template v-for="item in contentConfig.propsList" :key="item.prop">
-        <template v-if="item.type === 'time'">
-          <el-table-column align="center" :prop="item.prop" :label="item.label">
-            <template #default="scope">
-              {{ utcFormat(scope.row[item.prop]) }}
-            </template>
-          </el-table-column>
+  <el-table :data="tableDatas" border style="width: 100%" @selectionChange="(selection: any) => $emit('selectionChange', selection)" v-bind="tableConfig.tableConfig.elTableConfig">
+    <el-table-column v-if="tableConfig.tableConfig.showSelectColumn" type="selection" align="center" width="60px"></el-table-column>
+    <el-table-column v-if="tableConfig.tableConfig.showIndexColumn" type="index" label="序号" align="center" width="80px"></el-table-column>
+    <template v-for="item in tableConfig.tableConfig.tableItems" :key="item.prop">
+      <el-table-column v-bind="item" align="center" show-overflow-tooltip>
+        <template #default="{ row }">
+          <slot :name="item.slotName" :row="row">
+            {{ row[item.prop] }}
+          </slot>
         </template>
-        <template v-else-if="item.type === 'handler'">
-          <el-table-column align="center" :label="item.label" :width="item.width">
-            <template #default="scope">
-              <el-button v-if="isUpdate" type="primary" size="small" icon="EditPen" link @click="handleEditClick(scope.row)"> 编辑 </el-button>
-              <el-button v-if="isDelete" type="danger" size="small" icon="Delete" link @click="handleDeleteClick(scope.row.id)"> 删除 </el-button>
-            </template>
-          </el-table-column>
-        </template>
-        <template v-else-if="item.type === 'custom'">
-          <el-table-column align="center" :label="item.label" :width="item.width">
-            <template #default="scope">
-              <slot :name="item.slotName" v-bind="scope"></slot>
-            </template>
-          </el-table-column>
-        </template>
-        <template v-else>
-          <el-table-column align="center" v-bind="item" />
-        </template>
-      </template>
-    </el-table>
-  </div>
-  <footer v-if="contentConfig.showfooter">
-    <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 30]" layout="total, sizes, prev, pager, next, jumper" :total="pageTotalCount" @current-change="handleCurrentChange" />
+      </el-table-column>
+    </template>
+  </el-table>
+  <footer v-if="paginConfig?.showfooter">
+    <slot name="footer">
+      <el-pagination
+        :current-page="offset"
+        :page-size="size"
+        @update:page-size="changePagina('page-size', $event)"
+        @update:current-page="changePagina('current-page', $event)"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="paginConfig.paginaCount"
+      />
+    </slot>
   </footer>
 </template>
 
 <style lang="less" scoped>
-.header {
-  display: flex;
-  height: 45px;
-  padding: 0 5px;
-  justify-content: space-between;
-  align-items: center;
-
-  .title {
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .handler {
-    align-items: center;
-  }
-}
-
 .table {
   :deep(.el-table__cell) {
     padding: 14px 0;

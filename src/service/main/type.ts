@@ -11,6 +11,7 @@ export interface IList<T = any> {
 // export type pageName = 'department' | 'role' | 'menu' | 'goods' | 'category'
 
 export type pageName = {
+  users: IList<IUserList[]>
   department: IList<IDepartmentList[]>
   role: IList<IRoleList[]>
 }
@@ -25,6 +26,13 @@ export interface IUserList {
   roleId: number
   createAt: string
   updateAt: string
+}
+
+export interface IQueryInfo {
+  offset?: number
+  size?: number
+  name?: string
+  cellphone?: number
 }
 
 export interface IDepartmentList {
