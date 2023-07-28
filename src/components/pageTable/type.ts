@@ -15,7 +15,9 @@
 // }
 
 export type tableConfig = {
+  headerName?: string
   tableConfig: ITbaleProps
+  paginOpen?: boolean
   paginConfig?: IPaginConfig
   tableDatas: any[]
 }
@@ -31,10 +33,8 @@ export interface ITbaleProps {
 }
 
 export interface IPaginConfig {
-  showfooter: boolean
   offset: number
   size: number
-  // paginations: Record<'offset' | 'size', number>
   paginaCount: number
 }
 

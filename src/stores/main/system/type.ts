@@ -1,19 +1,5 @@
-export interface IUser {
-  id: number
-  name: string
-  realname: string
-  cellphone: number
-  enable: number
-  departmentId: number
-  roleId: number
-  createAt: string
-  updateAt: string
-}
-
+import type { IPaginConfig } from '@/components/pageTable/type'
 export interface ISystemState {
-  usersTotalCount: number
-  usersList: IUser[]
-
   pageList: any[]
-  pageTotalCount: number
+  paginConfig: IPaginConfig
 }

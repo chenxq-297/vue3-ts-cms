@@ -33,6 +33,9 @@ export interface IQueryInfo {
   size?: number
   name?: string
   cellphone?: number
+  realname?: string
+  enable?: boolean
+  createAt?: any
 }
 
 export interface IDepartmentList {

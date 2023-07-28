@@ -1,38 +1,51 @@
 <script setup lang="ts">
+import { ref, onMounted, getCurrentInstance, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import PageForm from '@/components/pageForm/index.vue'
 import PageTable from '@/components/pageTable/index.vue'
 
+import usePageContent from '@/hooks/usePageContent'
+
 import searchConfig from './config/search.config'
-import { tableConfig, paginConfig } from './config/table.config'
+import { tableConfig } from './config/table.config'
 
 import useSystemStore from '@/stores/main/system/system'
 import type { IQueryInfo } from '@/service/main/type'
 
 const systemStore = useSystemStore()
 
-const { pageList, pageTotalCount } = storeToRefs(systemStore)
+const { pageList, paginConfig } = storeToRefs(systemStore)
 
-const resetBtnClick = () => {
-  // 重置网络请求
+// 表单搜索、重置
+const { handleQueryClick, handleResetClick } = usePageContent(searchConfig.pageName)
+
+const getPageListData = async (query: IQueryInfo = {}) => {
+  await systemStore.getPageListDataAction(searchConfig.pageName, query)
 }
+getPageListData()
+onMounted(() => {
+  // const condition = paginConfig.value
+  // const flag = Reflect.deleteProperty(condition, 'paginaCount')
+})
+
 const aaaa = (val: any) => {
-  val.current === 'page-size' ? (paginConfig.size = val.currentNum) : (paginConfig.offset = val.currentNum)
+  val.current === 'page-size' ? (paginConfig.value.size = val.currentNum) : (paginConfig.value.offset = (val.currentNum - 1) * paginConfig.value.size)
+  const condition = { ...paginConfig.value }
+  const flag = Reflect.deleteProperty(condition, 'paginaCount')
+
+  getPageListData(condition)
 }
 
-const getPageListData = (query: IQueryInfo) => {
-  systemStore.getPageListDataAction(searchConfig.pageName, query)
-  paginConfig.paginaCount = pageTotalCount.value
-}
-getPageListData({})
-
-const handledit = (a) => {}
-const handledelect = (a) => {}
+const handledit = (a: any) => {}
+const handledelect = (a: any) => {}
 </script>
 
 <template>
-  <PageForm :searchConfig="searchConfig" @queryClick="(form) => getPageListData(form)" @resetClick="resetBtnClick" />
-  <PageTable :tableConfig="tableConfig" :tableDatas="pageList" :pagin-config="paginConfig" @paginConfigFn="aaaa">
+  <PageForm :searchConfig="searchConfig" @queryClick="handleQueryClick" @resetClick="handleResetClick" />
+  <PageTable headerName="用户数据" :tableConfig="tableConfig" :tableDatas="pageList" :paginOpen="true" :pagin-config="paginConfig" @paginConfigFn="aaaa">
+    <template #headerControl>
+      <el-button type="primary">Add</el-button>
+    </template>
     <template #status="{ row }">
       <el-button plain :type="row.enable ? 'success' : 'danger'">
         {{ row.enable ? '启用' : '禁用' }}

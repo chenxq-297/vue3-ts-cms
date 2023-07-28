@@ -1,4 +1,4 @@
-import type { ITbaleProps, IPaginConfig } from '@/components/pageTable/type'
+import type { ITbaleProps } from '@/components/pageTable/type'
 
 // 表格配置
 export const tableConfig: ITbaleProps = {
@@ -17,11 +17,4 @@ export const tableConfig: ITbaleProps = {
     ]
   },
   otherConfig: {}
-}
-// 页脚配置
-export const paginConfig: IPaginConfig = {
-  showfooter: true,
-  offset: 1,
-  size: 10,
-  paginaCount: 30
 }

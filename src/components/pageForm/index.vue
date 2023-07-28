@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
+import { Refresh, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
 
 import type { searchConfig, emitConfig, formType, searchFormType } from './type'
 
@@ -17,7 +18,9 @@ const searchForm = reactive<searchFormType>(
 )
 
 function handleResetClick() {
-  formRef.value?.resetFields()
+  formRef.value!.resetFields()
+  // console.log(formRef.value)
+  // console.log(searchForm)
   emit('resetClick')
 }
 function handleQueryClick() {
@@ -28,7 +31,7 @@ function handleQueryClick() {
 <template>
   <div class="pageForm">
     <!-- 表单输入 -->
-    <el-form :model="searchConfig" ref="formRef" label-width="120px" size="large">
+    <el-form :model="searchForm" ref="formRef" label-width="auto" size="large">
       <el-row :gutter="20">
         <template v-for="item in searchConfig.formItems" :key="item.prop">
           <el-col :span="8">
@@ -37,7 +40,7 @@ function handleQueryClick() {
                 <el-input v-model="searchForm[item.prop]" :placeholder="item.placeholder" />
               </template>
               <template v-if="item.type === 'select'">
-                <el-select :placeholder="item.placeholder" v-model="searchForm[item.prop]">
+                <el-select :placeholder="item.placeholder" v-model="searchForm[item.prop]" style="width: '100%'">
                   <el-option v-for="option in item.options" :label="option.label" :value="option.value" :key="option.title" />
                 </el-select>
               </template>
@@ -51,8 +54,8 @@ function handleQueryClick() {
     </el-form>
     <!-- 搜索按钮  -->
     <div class="btns">
-      <el-button size="large" icon="Refresh" @click="handleResetClick">重置</el-button>
-      <el-button size="large" icon="Search" type="primary" @click="handleQueryClick"> 查询 </el-button>
+      <el-button size="large" :icon="Refresh" @click="handleResetClick">重置</el-button>
+      <el-button size="large" :icon="Search" type="primary" @click="handleQueryClick"> 查询 </el-button>
     </div>
   </div>
 </template>
@@ -66,6 +69,9 @@ function handleQueryClick() {
   .el-form-item {
     padding: 20px 40px;
     margin-bottom: 0;
+  }
+  .el-select {
+    width: 100% !important;
   }
 }
 .btns {
