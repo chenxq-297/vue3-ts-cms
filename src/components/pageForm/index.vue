@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
-import { Refresh, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
+import { Refresh, Search } from '@element-plus/icons-vue'
 
 import type { searchConfig, emitConfig, formType, searchFormType } from './type'
 

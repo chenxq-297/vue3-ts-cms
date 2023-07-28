@@ -77,7 +77,7 @@ const useLoginStore = defineStore('login', {
       this.tokens = LocalCache.getCache('RB-cms-Token')
       this.userInfo = LocalCache.getCache('RB-cms-userInfo')
       this.userMenus = LocalCache.getCache('RB-cms-userMenus')
-      console.log(this.tokens)
+      this.permissions = LocalCache.getCache('RB-cms-permissions')
 
       if (!(this.tokens && this.userInfo && this.userMenus)) return
       const routes = mapMenuToRoutes(this.userMenus)

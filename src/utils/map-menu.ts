@@ -71,6 +71,7 @@ export function mapPathToMenu(menus: IRoleMenus[], path: string) {
   }
 }
 
+// 获取当前登录人的所有权限
 export function mapMenuToPersssions(menus: any[]) {
   const permissions: string[] = []
   function _recurseGetPermission(menuList: any[]) {

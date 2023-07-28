@@ -17,7 +17,7 @@ const useSystemStore = defineStore('system', {
   }),
   actions: {
     // 页面的网络请求
-    async getPageListDataAction(pageName: keyof pageName, queryInfo: IQueryInfo) {
+    async getPageListDataAction(pageName: keyof pageName, queryInfo: IQueryInfo = {}) {
       const pageListResult = await getPageListData(pageName, queryInfo)
       const { list, totalCount } = pageListResult.data
       this.pageList = list
