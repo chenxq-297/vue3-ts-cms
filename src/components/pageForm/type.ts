@@ -24,7 +24,7 @@ export interface IFormPropsItem {
   label: string
   prop: string
   type: string
-  options?: any
+  options?: any[]
   placeholder?: string
   initialValue?: any
 }

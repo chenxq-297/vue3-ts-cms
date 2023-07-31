@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+import useMainStore from '../main/main'
+
 import { accountLoginRequest, getRoleMenusRequset, getUserByIdRequset } from '@/service/login/login'
 import { mapMenuToRoutes, firstRoute, mapMenuToPersssions } from '@/utils/map-menu'
 import LocalCache from '@/utils/cache'
@@ -62,6 +64,8 @@ const useLoginStore = defineStore('login', {
       this.permissions = permissions
       LocalCache.setCache('RB-cms-permissions', this.permissions)
 
+      // 初始化菜单
+      useMainStore().fetchEntireDataAction()
       // 动态添加路由
       const routes = mapMenuToRoutes(this.userMenus)
       for (const route of routes) {
@@ -78,7 +82,7 @@ const useLoginStore = defineStore('login', {
       this.userInfo = LocalCache.getCache('RB-cms-userInfo')
       this.userMenus = LocalCache.getCache('RB-cms-userMenus')
       this.permissions = LocalCache.getCache('RB-cms-permissions')
-
+      useMainStore().fetchEntireDataAction()
       if (!(this.tokens && this.userInfo && this.userMenus)) return
       const routes = mapMenuToRoutes(this.userMenus)
       for (const route of routes) {

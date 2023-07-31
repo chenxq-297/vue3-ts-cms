@@ -1,7 +1,7 @@
 import type { ITbaleProps } from '@/components/pageTable/type'
 
 // 表格配置
-export const tableConfig: ITbaleProps = {
+const tableConfig: ITbaleProps = {
   tableConfig: {
     showSelectColumn: true,
     showIndexColumn: true,
@@ -18,3 +18,5 @@ export const tableConfig: ITbaleProps = {
   },
   otherConfig: {}
 }
+
+export default tableConfig

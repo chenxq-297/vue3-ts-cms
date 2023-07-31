@@ -2,25 +2,33 @@ import { getDepartmentData, getMenuData, getRoleData } from '@/service/main/syst
 import { defineStore } from 'pinia'
 
 interface IMainState {
-  entireDepartments: any[]
-  entireRoles: any[]
+  departments: any[]
+  roles: any[]
   entireMenus: any[]
 }
 
 const useMainStore = defineStore('main', {
   state: (): IMainState => ({
-    entireDepartments: [],
-    entireRoles: [],
+    departments: [],
+    roles: [],
     entireMenus: []
   }),
+  getters: {
+    departmentOptions: (state) => {
+      return state.departments.map((item) => ({ title: item.name, value: item.id }))
+    },
+    rolesOptions: (state) => {
+      return state.roles.map((item) => ({ title: item.name, value: item.id }))
+    }
+  },
   actions: {
     async fetchEntireDataAction() {
       const departmentResult = await getDepartmentData({ offset: 0, size: 100 })
       const roleResult = await getRoleData({ offset: 0, size: 100 })
       const menuResult = await getMenuData()
 
-      this.entireDepartments = departmentResult.data.list
-      this.entireRoles = roleResult.data.list
+      this.departments = departmentResult.data.list
+      this.roles = roleResult.data.list
       this.entireMenus = menuResult.data.list
     }
   }

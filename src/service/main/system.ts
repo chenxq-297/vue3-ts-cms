@@ -58,25 +58,25 @@ export function editPageData<T extends keyof pageName>(pageName: T, id: number, 
   })
 }
 
-// /** 获取部门的信息 */
-// export function getDepartmentData(queryInfo: any) {
-//   return cmsRequst.post({
-//     url: '/department/list',
-//     data: queryInfo
-//   })
-// }
+/** 获取部门的信息 */
+export function getDepartmentData(queryInfo: any) {
+  return cmsRequst.post<any>({
+    url: '/department/list',
+    data: queryInfo
+  })
+}
 
-// /** 获取角色的信息 */
-// export function getRoleData(queryInfo: any) {
-//   return cmsRequst.post({
-//     url: '/role/list',
-//     data: queryInfo
-//   })
-// }
+/** 获取角色的信息 */
+export function getRoleData(queryInfo: any) {
+  return cmsRequst.post<any>({
+    url: '/role/list',
+    data: queryInfo
+  })
+}
 
-// /** 获取菜单的信息 */
-// export function getMenuData() {
-//   return cmsRequst.post({
-//     url: '/menu/list'
-//   })
-// }
+/** 获取菜单的信息 */
+export function getMenuData() {
+  return cmsRequst.post<any>({
+    url: '/menu/list'
+  })
+}
