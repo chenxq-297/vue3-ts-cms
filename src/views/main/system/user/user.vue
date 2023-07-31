@@ -31,7 +31,7 @@ const { handleQueryClick, handleResetClick } = usePageContent(searchConfig.pageN
 const { isQuery, isCreate, isDelete, isUpdate } = usePermission(searchConfig.pageName)
 
 //弹窗
-const { modalRef, formDataEcho, handleAdd, handlEdit, handleDelect, handleConfirm } = usePageModal()
+const { modalRef, formDataEcho, handleAdd, handlEdit, handleDelect, handleConfirm } = usePageModal(searchConfig.pageName)
 // 可以再度优化 把值传入hooks 让它初始化完成 在组件那边就不需要回显操作
 
 // modalConfig 的需要初始化的下拉框(网络请求后的数据)

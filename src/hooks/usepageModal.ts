@@ -1,7 +1,17 @@
 import { ref } from 'vue'
-export default function usePageModal() {
+
+import useSystemStore from '@/stores/main/system/system'
+
+import type { pageName } from '@/service/main/type'
+
+export default function usePageModal(pagename: keyof pageName) {
+  // 组件ref
   const modalRef = ref()
+  // 回显数据
   const formDataEcho = ref(null)
+  // hooks中判断为编辑还是删除
+  let condition = true
+  let resultId = 0
 
   const handleAdd = () => {
     formDataEcho.value = null
@@ -11,20 +21,23 @@ export default function usePageModal() {
   }
 
   const handlEdit = (item: any) => {
-    // 跳出dial
-    // 回填
     formDataEcho.value = item
+    resultId = item.id
     modalRef.value.dialogVisible = true
-    // edit && edit(item)
+    // 判断为false
+    condition = false
   }
 
   const handleDelect = (item: any) => {
-    formDataEcho.value = item
-    modalRef.value.dialogVisible = true
+    useSystemStore().deletePageDataAction(pagename, item.id)
   }
 
   const handleConfirm = (resultParma: any) => {
-    console.log(297, resultParma)
+    if (condition) {
+      useSystemStore().newPageDataAction(pagename, resultParma)
+    } else {
+      useSystemStore().editPageDataAction(pagename, resultId, resultParma)
+    }
     modalRef.value.dialogVisible = false
   }
 

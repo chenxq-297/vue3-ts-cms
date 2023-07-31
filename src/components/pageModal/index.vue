@@ -1,9 +1,8 @@
-()
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 
-import type { IProps } from './type.ts'
-import type { searchFormType } from '../pageForm/type.ts'
+import type { IProps } from '@/components/pageModal/type'
+import type { searchFormType } from '@/components/pageForm/type'
 const props = defineProps<IProps>()
 defineEmits(['confirm'])
 
@@ -17,14 +16,11 @@ const searchForm = reactive<searchFormType>(
   }, {})
 )
 
+// 清空
 function resetModelConfig() {
   for (const item of props.modalConfig.formItems) {
     searchForm[`${item.prop}`] = ''
   }
-  // searchForm.reduce((form: any, item) => {
-  //   form[item.prop] = ''
-  //   return form
-  // }, {})
 }
 
 // 回显
