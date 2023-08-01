@@ -57,11 +57,11 @@ defineExpose({ dialogVisible, resetModelConfig })
             </el-select>
           </template>
           <template v-if="item.type === 'date-picker'">
-            <el-date-picker type="daterange" range-separator="-" start-placeholder="开始时间" end-placeholder="结束时间" v-model="formData[item.prop]" />
+            <el-date-picker type="daterange" range-separator="-" start-placeholder="开始时间" end-placeholder="结束时间" v-model="searchForm[item.prop]" />
           </template>
-          <!-- <template v-if="item.type === 'custom'">
+          <template v-if="item.type === 'custom'">
             <slot :name="item.slotName"></slot>
-          </template> -->
+          </template>
         </el-form-item>
       </template>
     </el-form>

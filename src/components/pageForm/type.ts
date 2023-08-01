@@ -27,4 +27,5 @@ export interface IFormPropsItem {
   options?: any[]
   placeholder?: string
   initialValue?: any
+  slotName?: any
 }

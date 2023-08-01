@@ -38,7 +38,7 @@ const changePagina = (current: string, currentNum: number) => {
       <slot name="headerControl"></slot>
     </div>
   </header>
-  <el-table :data="tableDatas" border style="width: 100%" @selectionChange="(selection: any) => $emit('selectionChange', selection)" v-bind="tableConfig.tableConfig.elTableConfig">
+  <el-table :data="tableDatas" border style="width: 100%" @selectionChange="(selection: any) => $emit('selectionChange', selection)" v-bind="tableConfig.otherConfig">
     <el-table-column v-if="tableConfig.tableConfig.showSelectColumn" type="selection" align="center" width="60px"></el-table-column>
     <el-table-column v-if="tableConfig.tableConfig.showIndexColumn" type="index" label="序号" align="center" width="80px"></el-table-column>
     <template v-for="item in tableConfig.tableConfig.tableItems" :key="item.prop">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, getCurrentInstance, watch } from 'vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import PageForm from '@/components/pageForm/index.vue'
 import PageTable from '@/components/pageTable/index.vue'
@@ -45,11 +45,13 @@ const resultModelConfig = computed(() => {
   return modalConfig
 })
 
+// 页面数据
 const getPageListData = async (query: IQueryInfo = {}) => {
   await systemStore.getPageListDataAction(searchConfig.pageName, query)
 }
 getPageListData()
 
+// 页面发生修改(可封装)
 const changePaginConfig = (item: any) => {
   item.current === 'page-size' ? (paginConfig.value.size = item.currentNum) : (paginConfig.value.offset = (item.currentNum - 1) * paginConfig.value.size)
   const condition = { ...paginConfig.value }
@@ -82,5 +84,5 @@ const changePaginConfig = (item: any) => {
       </div>
     </template>
   </PageTable>
-  <PageModal ref="modalRef" :modalConfig="resultModelConfig" :defaultFormItemsValue="formDataEcho" @confirm="handleConfirm"></PageModal>
+  <PageModal ref="modalRef" :modalConfig="resultModelConfig" :defaultFormItemsValue="formDataEcho" @confirm="handleConfirm" />
 </template>

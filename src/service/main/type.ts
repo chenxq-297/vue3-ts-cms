@@ -14,6 +14,8 @@ export type pageName = {
   users: IList<IUserList[]>
   department: IList<IDepartmentList[]>
   role: IList<IRoleList[]>
+  menu: IList<any[]>
+  goods: IList<any[]>
 }
 
 export interface IUserList {
